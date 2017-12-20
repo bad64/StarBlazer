@@ -13,3 +13,7 @@ To compile this project, you need to link in the following order:
 -lSDL2_mixer
 
 Any C++ compiler supporting C++14 should work, so basic MinGW32 on Windows won't. You will need MinGW-w64 with SJLJ and POSIX threads. Don't forget the -mwindows switch if you're on Windows !
+
+- on linux : 
+g++ *.h *.cpp -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -o test	
+
