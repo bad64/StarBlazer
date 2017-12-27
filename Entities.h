@@ -25,12 +25,10 @@ public:
     Actor(SDL_Renderer* renderer, std::string nname, int nx, int ny);
     ~Actor();
 
-    //Method to define behavior of a bit of everything, really
-    void Behave(int playerx, int playery, int frames);
-    void Shoot();
+    void Info();
 };
 
-class Player : public Actor
+class PlayerClass : public Actor
 {
 public:
     int lives;
@@ -39,25 +37,23 @@ public:
     bool controls;
     void Respawn();
     void Behave(int playerx, int playery, int frames);
-    Player(SDL_Renderer* renderer, std::string nname, int nx, int ny);
-    ~Player();
+    PlayerClass(SDL_Renderer* renderer, std::string nname, int nx, int ny);
+    ~PlayerClass();
 };
 
-class Enemy : public Actor
+class EnemyClass : public Actor
 {
 public:
     ENEMY_SUBTYPE subtype;
 
-    Enemy(SDL_Renderer* renderer, std::string nname, int nx, int ny, ENEMY_SUBTYPE nsubtype);;
-    ~Enemy();
-    void Behave(int playerx, int playery, int frames);
+    EnemyClass(SDL_Renderer* renderer, std::string nname, int nx, int ny, ENEMY_SUBTYPE nsubtype);;
+    ~EnemyClass();
 };
 
-class Boss : public Actor
+class BossClass : public Actor
 {
 public:
     BOSS_STATE boss_ai_state;
-    Boss(SDL_Renderer* renderer, std::string nname, int nx, int ny);
-    ~Boss();
-    void Behave(int playerx, int playery, int frames);
+    BossClass(SDL_Renderer* renderer, std::string nname, int nx, int ny);
+    ~BossClass();
 };

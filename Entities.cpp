@@ -54,13 +54,57 @@ Actor::Actor(SDL_Renderer* renderer, std::string nname, int nx, int ny)
     currentsprite.h = 50;
 
     state = ALIVE;
+
+    cout << nname << " created with state " << state << endl;
 }
 Actor::~Actor()
 {
+    cout << "Destroyed " << name << endl;
+}
+
+void Actor::Info()
+{
+    cout << name << " at " << renderquad.x << ":" << renderquad.y << endl;
+    cout << "Type is ";
+    switch (type)
+    {
+    case PLAYER:
+        cout << "PLAYER";
+        break;
+    case ENEMY:
+        cout << "ENEMY";
+        break;
+    case FRIENDLY:
+        cout << "FRIENDLY";
+        break;
+    case BOSS:
+        cout << "BOSS";
+        break;
+    }
+
+    cout << " and state is ";
+
+    switch (state)
+    {
+    case ALIVE:
+        cout << "ALIVE";
+        break;
+    case DESTROYED:
+        cout << "DESTROYED";
+        break;
+    case INVINCIBLE:
+        cout << "INVINCIBLE";
+        break;
+    }
+
+    cout << endl;
+
+    cout << "xspeed: " << xspeed << endl;
+    cout << "yspeed: " << yspeed << endl;
 
 }
 
-Player::Player(SDL_Renderer* renderer, std::string nname, int nx, int ny) : Actor(renderer, nname, nx, ny)
+PlayerClass::PlayerClass(SDL_Renderer* renderer, std::string nname, int nx, int ny) : Actor(renderer, nname, nx, ny)
 {
     lives = 3;
     score = 0;
@@ -71,43 +115,17 @@ Player::Player(SDL_Renderer* renderer, std::string nname, int nx, int ny) : Acto
     xspeed = 0;
     yspeed = 0;
 }
-Player::~Player()
+PlayerClass::~PlayerClass()
 {
 
 }
 
-void Player::Behave(int playerx, int playery, int frame)
-{
-    renderquad.x += xspeed;
-    renderquad.y += yspeed;
-
-    switch (direction)
-    {
-    case RIGHT:
-        currentsprite.x = 0;
-        currentsprite.y = 0;
-        break;
-    case LEFT:
-        currentsprite.x = 50;
-        currentsprite.y = 0;
-        break;
-    case UP:
-        currentsprite.x = 100;
-        currentsprite.y = 0;
-        break;
-    case DOWN:
-        currentsprite.x = 150;
-        currentsprite.y = 0;
-        break;
-    }
-}
-
-void Player::Respawn()
+void PlayerClass::Respawn()
 {
     state = INVINCIBLE;
 }
 
-Enemy::Enemy(SDL_Renderer* renderer, std::string nname, int nx, int ny, ENEMY_SUBTYPE nsubtype) : Actor(renderer, nname, nx, ny)
+EnemyClass::EnemyClass(SDL_Renderer* renderer, std::string nname, int nx, int ny, ENEMY_SUBTYPE nsubtype) : Actor(renderer, nname, nx, ny)
 {
     type = ENEMY;
     subtype = nsubtype;
@@ -133,53 +151,7 @@ Enemy::Enemy(SDL_Renderer* renderer, std::string nname, int nx, int ny, ENEMY_SU
         break;
     }
 }
-Enemy::~Enemy()
+EnemyClass::~EnemyClass()
 {
 
-}
-
-void Enemy::Behave(int playerx, int playery, int frames)
-{
-    switch (this->subtype)
-    {
-    case REGULAR:
-        break;
-    case BOMBER:
-        this->renderquad.x += this->xspeed;
-        this->renderquad.y += this->yspeed;
-
-        if (frames % 3 == 0)
-        {
-            if ((this->renderquad.x < (WIDTH * 4) / 10))
-            {
-                if (this->xspeed != 5)
-                    this->xspeed += 1;
-            }
-            else if (this->renderquad.x > WIDTH - 150)
-            {
-                if (this->xspeed != -5)
-                    this->xspeed -= 1;
-            }
-
-            if ((this->renderquad.y > playery) && (this->yspeed > -8))
-            {
-                this->yspeed -= 1;
-            }
-            else if ((this->renderquad.y < playery) && (this->yspeed < 8))
-            {
-                this->yspeed += 1;
-            }
-
-            if (this->renderquad.y < 0)
-            {
-                this->renderquad.y = 0;
-                this->yspeed = 0;
-            }
-        }
-        break;
-    case KAMIKAZE:
-        break;
-    case TANK:
-        break;
-    }
 }

@@ -13,6 +13,8 @@ int main(int argc, char* argv[])
 
     bool loop = true;
     SDL_Event event;
+    const uint8_t* keyboard = SDL_GetKeyboardState(NULL);
+    Engine Game = Engine();
 
     //Frame counter subsystem
     uint32_t seconds = 0;
@@ -22,8 +24,9 @@ int main(int argc, char* argv[])
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-    Player test = Player(renderer, "player", 0, 0);
-    Enemy bomberman = Enemy(renderer, "bomber", 1000, 500, BOMBER);
+    PlayerClass test = PlayerClass(renderer, "Player", 0, 0);
+
+    Game.ActorsList.push_back(move(test));
 
     while(loop)
     {
@@ -39,40 +42,9 @@ int main(int argc, char* argv[])
                 {
                     loop = false;
                 }
-                if (event.key.keysym.sym == SDLK_z)
+                if (event.key.keysym.sym == SDLK_g)
                 {
-                    test.yspeed = -5;
-                }
-                if (event.key.keysym.sym == SDLK_s)
-                {
-                    test.yspeed = 5;
-                }
-                if (event.key.keysym.sym == SDLK_q)
-                {
-                    test.xspeed = -5;
-                }
-                if (event.key.keysym.sym == SDLK_d)
-                {
-                    test.xspeed = 5;
-                }
-            }
-            if (event.type == SDL_KEYUP)
-            {
-                if (event.key.keysym.sym == SDLK_z)
-                {
-                    test.yspeed = 0;
-                }
-                if (event.key.keysym.sym == SDLK_s)
-                {
-                    test.yspeed = 0;
-                }
-                if (event.key.keysym.sym == SDLK_q)
-                {
-                    test.xspeed = 0;
-                }
-                if (event.key.keysym.sym == SDLK_d)
-                {
-                    test.xspeed = 0;
+                    Game.ActorsList[0].state = DESTROYED;
                 }
             }
 
@@ -84,11 +56,11 @@ int main(int argc, char* argv[])
         //This is the part where you need to refer to the various Engine headers to figure out what's going on
 
         //Test area
-        test.Behave(0, 0, 0);
-        SDL_RenderCopy(renderer, test.spritesheet, &test.currentsprite, &test.renderquad);
+        /*for (int i = 0; i < Game.ActorsList.size(); i++)
+            Game.TheAlmightyController(&Game.ActorsList[i]);*/
 
-        bomberman.Behave(test.renderquad.x, test.renderquad.y, frames);
-        SDL_RenderCopy(renderer, bomberman.spritesheet, &bomberman.currentsprite, &bomberman.renderquad);
+        Game.UpdateDisplay(renderer);
+        Game.GarbageCollector();
         //End of test area
 
         SDL_RenderPresent(renderer);
@@ -96,7 +68,7 @@ int main(int argc, char* argv[])
 
         if (timer.GetSeconds() != seconds)
         {
-            cout << "Frames per second: " << frames / timer.GetSeconds() << endl;
+            //cout << "Frames per second: " << frames / timer.GetSeconds() << endl;
             seconds = timer.GetSeconds();
         }
     }

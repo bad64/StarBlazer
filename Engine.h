@@ -16,7 +16,16 @@ public:
 class Engine
 {
 public:
+    Engine();   //Should never have
+    ~Engine();  //to call these either
+
     vector<Actor> ActorsList;
-    int currentframe;
+    vector<Actor> Garbage;
+
     void UpdateDisplay(SDL_Renderer* renderer);
+
+    void TheAlmightyController(Actor* player);
+    void TheAlmightyController(Actor* player, Actor* enemy);
+
+    void GarbageCollector();
 };
