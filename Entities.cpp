@@ -71,7 +71,7 @@ Actor::Actor(SDL_Renderer* renderer, std::string nname, int nx, int ny, int curr
 }
 Actor::~Actor()
 {
-
+    cout << "Destroyed " << name << endl;
 }
 
 Player::Player(SDL_Renderer* renderer, std::string nname, int nx, int ny, int currentframe, Actor* nparent) : Actor(renderer, nname, nx, ny, currentframe, nparent)

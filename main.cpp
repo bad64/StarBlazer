@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     Game.ActorsList.emplace_back(Player(renderer, "Player", 50, 300, 0, NULL));
+    Player test = Player(renderer, "Player 2", 50, 300, 0, NULL);
 
     while(loop)
     {
