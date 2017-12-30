@@ -89,6 +89,8 @@ void Engine::GarbageCollector()
 {
     if (!Garbage.empty())
     {
+        for (int i = 0; i < Garbage.size(); i++)
+            SDL_DestroyTexture(Garbage[i].spritesheet);
         Garbage.erase(Garbage.begin(), Garbage.end());
     }
 }

@@ -72,10 +72,10 @@ void Engine::MovementController(SDL_Renderer* renderer, Actor* target, const uin
 
     if (keyboard[SDL_SCANCODE_SPACE])
     {
-        if (currentframe >= target->lockedOnFrame + target->lockout)
+        if (currentframe > target->lockedOnFrame + target->lockout)
         {
-            Shoot(renderer, target, currentframe);
             target->lockedOnFrame = currentframe;
+            Shoot(renderer, target, currentframe);
         }
     }
 }
