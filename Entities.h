@@ -5,55 +5,53 @@ SDL_Texture* LoadTexture(SDL_Renderer* renderer, std::string texturename);
 class Actor
 {
 public:
+    //Flags to determine what the hell are we looking at
     ACTOR_TYPE type;
-    std::string name;
-
-    SDL_Texture* spritesheet;
-    SDL_Rect currentsprite;
-
-    int xspeed;
-    int yspeed;
-    SDL_Rect renderquad;
-
-    int lifetime;
-
-    //Generic flags
+    ACTOR_SUBTYPE subtype;
+    SHOT_TYPE shottype;
     ACTOR_STATE state;
     ACTOR_DIRECTION direction;
 
-    //Constructor/Destructor
-    Actor(SDL_Renderer* renderer, std::string nname, int nx, int ny);
+    //Generic attributes
+    std::string name;
+    int hitpoints;
+    Actor* parent; //Useful for collision detection
+    int createdOnFrame;
+    int timeToLive;
+    int lockedOnFrame;
+    int lockout;
+    int xspeed, yspeed;
+
+    //Sprite data
+    SDL_Texture* spritesheet;
+    SDL_Rect currentsprite;
+
+    //Hitbox data
+    SDL_Rect renderquad; //Where we render the actor
+    SDL_Rect hitbox;
+    SDL_Rect bone_gun;
+
+    Actor(SDL_Renderer* renderer, std::string nname, int nx, int ny, int currentframe, Actor* nparent);
     ~Actor();
-
-    void Info();
 };
 
-class PlayerClass : public Actor
+class Player : public Actor
 {
 public:
-    int lives;
-    int score;
-    int bombs;
-    bool controls;
-    void Respawn();
-    void Behave(int playerx, int playery, int frames);
-    PlayerClass(SDL_Renderer* renderer, std::string nname, int nx, int ny);
-    ~PlayerClass();
+    Player(SDL_Renderer* renderer, std::string nname, int nx, int ny, int currentframe, Actor* nparent);
+    ~Player();
 };
 
-class EnemyClass : public Actor
+class Enemy : public Actor
 {
 public:
-    ENEMY_SUBTYPE subtype;
-
-    EnemyClass(SDL_Renderer* renderer, std::string nname, int nx, int ny, ENEMY_SUBTYPE nsubtype);;
-    ~EnemyClass();
+    Enemy(SDL_Renderer* renderer, std::string nname, int nx, int ny, int currentframe, ACTOR_SUBTYPE nsubtype, Actor* nparent);
+    ~Enemy();
 };
 
-class BossClass : public Actor
+class Bullet : public Actor
 {
 public:
-    BOSS_STATE boss_ai_state;
-    BossClass(SDL_Renderer* renderer, std::string nname, int nx, int ny);
-    ~BossClass();
+    Bullet(SDL_Renderer* renderer, std::string nname, int nx, int ny, int currentframe, Actor* nparent);
+    ~Bullet();
 };

@@ -22,10 +22,18 @@ public:
     vector<Actor> ActorsList;
     vector<Actor> Garbage;
 
-    void UpdateDisplay(SDL_Renderer* renderer);
+    void Shoot(SDL_Renderer* renderer, Actor* who, int currentframe);
 
-    void TheAlmightyController(Actor* player);
-    void TheAlmightyController(Actor* player, Actor* enemy);
+    //Essentials
+    void CollisionDetection();
+    void UpdateDisplay(SDL_Renderer* renderer, const uint8_t* keyboard, int currentframe);
 
+    //Controller functions
+    void MovementController(SDL_Renderer* renderer, Actor* target, const uint8_t* keyboard, int currentframe);      //Controls the player movement
+    void MovementController(Actor* target, Actor* enemy, int currentframe);                 //Controls the enemy movement
+    void MovementController(Actor* bullet, int currentframe);                               //Controls bullet movement
+
+    //Garbage collection & deletion
+    void Trash(int index);
     void GarbageCollector();
 };

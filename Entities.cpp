@@ -24,115 +24,87 @@ SDL_Texture* LoadTexture(SDL_Renderer* renderer, string texturename)
     return t_texture;
 }
 
-Actor::Actor(SDL_Renderer* renderer, std::string nname, int nx, int ny)
+Actor::Actor(SDL_Renderer* renderer, std::string nname, int nx, int ny, int currentframe, Actor* nparent)
 {
+    type = GENERIC;
+    subtype = NONE;
+    state = ALIVE;
+
     name = nname;
-
-    try
-    {
-        renderquad.x = nx;
-        renderquad.y = ny;
-        renderquad.w = 50;
-        renderquad.h = 50;
-    }
-    catch (...)
-    {
-        cout << "Something went terribly wrong in the definition of the render quad" << endl;
-        //If you see this, triple check your instance declaration. You likely called the constructor wrong
-
-        renderquad.x = 0;
-        renderquad.y = 0;
-        renderquad.w = 50;
-        renderquad.h = 50;
-    }
+    hitpoints = 1;  //Unless specific cases, that should always be 1
+    parent = nparent;
+    createdOnFrame = currentframe;
+    timeToLive = -1; //Unless it's a bullet, it should be -1
+    lockedOnFrame = 0;
+    lockout = 0;
+    xspeed = 0;
+    yspeed = 0;
 
     spritesheet = LoadTexture(renderer, name);
-
     currentsprite.x = 0;
     currentsprite.y = 0;
     currentsprite.w = 50;
     currentsprite.h = 50;
 
-    state = ALIVE;
+    renderquad.x = nx;
+    renderquad.y = ny;
+    renderquad.w = 50;
+    renderquad.h = 50;
 
-    cout << nname << " created with state " << state << endl;
+    hitbox.x = renderquad.x + renderquad.w/2 - 10;
+    hitbox.y = renderquad.y + renderquad.h/2 - 10;
+    hitbox.w = 25;
+    hitbox.h = 25;
+
+    bone_gun.w = 0;
+    bone_gun.h = 0;
+
+    /*cout << nname << " created with state " << state << endl;
+    if (parent != NULL)
+    {
+        cout << "Parent is " << parent->name << endl;
+    }
+    else
+    {
+        cout << "No parent" << endl;
+    }*/
 }
 Actor::~Actor()
 {
-    cout << "Destroyed " << name << endl;
+    //cout << "Destroyed " << name << endl;
 }
 
-void Actor::Info()
+Player::Player(SDL_Renderer* renderer, std::string nname, int nx, int ny, int currentframe, Actor* nparent) : Actor(renderer, nname, nx, ny, currentframe, nparent)
 {
-    cout << name << " at " << renderquad.x << ":" << renderquad.y << endl;
-    cout << "Type is ";
-    switch (type)
-    {
-    case PLAYER:
-        cout << "PLAYER";
-        break;
-    case ENEMY:
-        cout << "ENEMY";
-        break;
-    case FRIENDLY:
-        cout << "FRIENDLY";
-        break;
-    case BOSS:
-        cout << "BOSS";
-        break;
-    }
-
-    cout << " and state is ";
-
-    switch (state)
-    {
-    case ALIVE:
-        cout << "ALIVE";
-        break;
-    case DESTROYED:
-        cout << "DESTROYED";
-        break;
-    case INVINCIBLE:
-        cout << "INVINCIBLE";
-        break;
-    }
-
-    cout << endl;
-
-    cout << "xspeed: " << xspeed << endl;
-    cout << "yspeed: " << yspeed << endl;
-
-}
-
-PlayerClass::PlayerClass(SDL_Renderer* renderer, std::string nname, int nx, int ny) : Actor(renderer, nname, nx, ny)
-{
-    lives = 3;
-    score = 0;
-    bombs = 20;
-    controls = false;
     type = PLAYER;
-    direction = RIGHT;
-    xspeed = 0;
-    yspeed = 0;
+    subtype = NONE;
+    shottype = DEFAULT;
+
 }
-PlayerClass::~PlayerClass()
+Player::~Player()
 {
 
 }
 
-void PlayerClass::Respawn()
-{
-    state = INVINCIBLE;
-}
-
-EnemyClass::EnemyClass(SDL_Renderer* renderer, std::string nname, int nx, int ny, ENEMY_SUBTYPE nsubtype) : Actor(renderer, nname, nx, ny)
+Enemy::Enemy(SDL_Renderer* renderer, std::string nname, int nx, int ny, int currentframe, ACTOR_SUBTYPE nsubtype, Actor* nparent) : Actor(renderer, nname, nx, ny, currentframe, nparent)
 {
     type = ENEMY;
     subtype = nsubtype;
-    direction = LEFT;
 
-    switch (nsubtype)
+    bone_gun.x = 0;
+    bone_gun.y = 25;
+    bone_gun.w = 0;
+    bone_gun.h = 0;
+
+    hitbox.x = renderquad.x;
+    hitbox.y = renderquad.y;
+    hitbox.w = renderquad.w;
+    hitbox.h = renderquad.h;
+
+    switch (subtype)
     {
+    case NONE:
+        break;
     case REGULAR:
         xspeed = -5;
         yspeed = 0;
@@ -151,7 +123,68 @@ EnemyClass::EnemyClass(SDL_Renderer* renderer, std::string nname, int nx, int ny
         break;
     }
 }
-EnemyClass::~EnemyClass()
+Enemy::~Enemy()
+{
+
+}
+
+Bullet::Bullet(SDL_Renderer* renderer, std::string nname, int nx, int ny, int currentframe, Actor* nparent) : Actor(renderer, nname, nx, ny, currentframe, nparent)
+{
+    type = BULLET;
+    subtype = NONE;
+    shottype = DEFAULT;
+
+    switch (parent->shottype)
+    {
+    case DEFAULT:
+        if (parent->type == ENEMY)
+        {
+            currentsprite.x = 8;
+            currentsprite.y = 5;
+            currentsprite.w = 16;
+            currentsprite.h = 5;
+            timeToLive = -1;
+        }
+        else
+        {
+            currentsprite.x = 8;
+            currentsprite.y = 0;
+            currentsprite.w = 16;
+            currentsprite.h = 5;
+            timeToLive = -1;
+        }
+
+        renderquad.w = 16;
+        renderquad.h = 5;
+        parent->lockout = 45;
+        xspeed = 15;
+        yspeed = parent->yspeed;
+        break;
+    case RAPID:
+        currentsprite.x = 0;
+        currentsprite.y = 0;
+        currentsprite.w = 8;
+        currentsprite.h = 8;
+        timeToLive = 10;
+        renderquad.w = 8;
+        renderquad.h = 8;
+        parent->lockout = 5;
+        xspeed = 20;
+        break;
+    case CHARGE:
+        break;
+    case BOMB:
+        break;
+    case MINE:
+        break;
+    }
+
+    hitbox.x = renderquad.x;
+    hitbox.y = renderquad.y;
+    hitbox.w = renderquad.w;
+    hitbox.h = renderquad.h;
+}
+Bullet::~Bullet()
 {
 
 }
