@@ -156,7 +156,7 @@ Bullet::Bullet(SDL_Renderer* renderer, std::string nname, int nx, int ny, int cu
 
         renderquad.w = 16;
         renderquad.h = 5;
-        parent->lockout = 45;
+        parent->lockout = 20;
         xspeed = 15;
         yspeed = parent->yspeed;
         break;
@@ -169,7 +169,7 @@ Bullet::Bullet(SDL_Renderer* renderer, std::string nname, int nx, int ny, int cu
         renderquad.w = 8;
         renderquad.h = 8;
         parent->lockout = 5;
-        xspeed = 20;
+        xspeed = 25;
         break;
     case CHARGE:
         break;
