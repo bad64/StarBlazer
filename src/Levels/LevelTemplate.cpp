@@ -10,6 +10,7 @@ Level::Level()
 {
     Level::g_levelid++;
     levelid = Level::g_levelid;
+    bgm = NULL;
 }
 Level::~Level()
 {
@@ -60,4 +61,6 @@ void Level::Unload()
         SDL_DestroyTexture(layer4[i]->texture);
         SDL_DestroyTexture(layer3[i]->texture);
     }
+    Mix_HaltMusic();
+    Mix_FreeMusic(bgm);
 }

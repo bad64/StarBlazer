@@ -84,6 +84,11 @@ int main(int argc, char* argv[])
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_TIMER);
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
+    Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
+
+    //Useful sounds
+    Mix_Chunk* quarterup = Mix_LoadWAV("resources/snd/InsertCoin.wav");
+    Mix_Chunk* lazer = Mix_LoadWAV("resources/snd/Lazer.wav");
 
     //Let's do some joystick stuff
     SDL_Joystick* gamepad = NULL;
@@ -157,12 +162,13 @@ int main(int argc, char* argv[])
                 }
                 if (event.key.keysym.sym == SDLK_a)
                 {
-                    if ((Engine.credits < 99) && (!freeplay) && (Engine.state != INTRO))
+                    if ((Engine.credits < 99) && (!freeplay) && ((Engine.state == TITLE) || (Engine.state == DEMO)))
                     {
                         Engine.credits++;
+                        Mix_PlayChannel(-1, quarterup, 0);
                         Engine.ModCredits();
                     }
-                    else if ((freeplay)  && (Engine.state != INTRO))
+                    else if ((freeplay)  && (Engine.state == DEMO))
                     {
                         Engine.ResetToTitle();
                     }
@@ -192,6 +198,16 @@ int main(int argc, char* argv[])
                     if (event.jbutton.button == 6)
                     {
                         joystick_select = true;
+                        if ((Engine.credits < 99) && (!freeplay) && ((Engine.state == TITLE) || (Engine.state == DEMO)))
+                        {
+                            Engine.credits++;
+                            Mix_PlayChannel(-1, quarterup, 0);
+                            Engine.ModCredits();
+                        }
+                        else if ((freeplay)  && (Engine.state == DEMO))
+                        {
+                            Engine.ResetToTitle();
+                        }
                     }
                     if (event.jbutton.button == 7)
                     {
@@ -388,6 +404,7 @@ int main(int argc, char* argv[])
             {
                 if (Engine.currentframe >= Engine.mission->Actors.at(0)->lastShot + Engine.mission->Actors.at(0)->shotCooldownTimer)
                 {
+                    Mix_PlayChannel(-1, lazer, 0);
                     Engine.mission->Actors.at(0)->Shoot(Engine.renderer, Engine.currentframe, &Engine.mission->Actors);
                 }
             }

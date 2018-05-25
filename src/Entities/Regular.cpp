@@ -216,11 +216,11 @@ void Regular::Shoot(SDL_Renderer* renderer, int currentframe, int targetx, int t
 
 void Regular::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor*> *Actors)
 {
-    if (pattern == 0)
+    if (pattern == 0) //tout droit 
     {
 
     }
-    else if (pattern == 1)
+    else if (pattern == 1) //de haut en bas
     {
         if (sprite->rect.y > screenheight*8/10)
         {
@@ -247,10 +247,9 @@ void Regular::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor
             if ((yspeed > -6) && (currentframe % 2 == 0))
                 yspeed-=1;
         }
-    }
-    else if (pattern == 2) // rapide puis vas tout droit a la fin
+    }else if (pattern == 2) // rapide puis vas tout droit a la fin
     {
-        if (sprite->rect.y > screenheight*7/10)
+        if (sprite->rect.y > screenheight*7/10) 
         {
             if (pattern_state != 1)
             {
@@ -272,7 +271,7 @@ void Regular::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor
             }
         }
 
-        if (pattern_state == 0)
+        if (pattern_state == 0) 
         {
             if ((yspeed < 12) && (currentframe % 2 == 0)) //tant quau dessus monte a chaque frame plus vite
                 yspeed+=3;
@@ -288,8 +287,60 @@ void Regular::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor
             if ((xspeed > -10) && (currentframe % 2 == 0))
                 xspeed-=2;
         }
+    }else if (pattern == 3) //tout droit puis normal mais fixe needed
+    {
+        if (sprite->rect.x > screenwidth*6/10)
+        {
+            if (pattern_state != 2 )
+            {
+                pattern_state = 2;
+            }
+        }
+        else {
+            if (pattern_state != 3 && yspeed < 8){
+                pattern_state = 3;
+            }
+            if (sprite->rect.y > screenheight*7/10) 
+            {
+                if (pattern_state != 1)
+                {
+                    pattern_state = 1;
+                }
+            }
+            else if (sprite->rect.y < screenheight*3/10)
+            {
+                if (pattern_state != 0)
+                {
+                    pattern_state = 0;
+                }
+            }
+        }
+    
+        
+
+        if (pattern_state == 0) 
+        {
+            if ((yspeed < 8) && (currentframe % 2 == 0)) //tant quau dessus monte a chaque frame plus vite
+                yspeed+=3;
+        }
+        else if (pattern_state == 1)
+        {
+            if ((yspeed > -8) && (currentframe % 2 == 0))
+                yspeed-=3;
+        }
+        else if (pattern_state == 2)
+        {
+            yspeed = 0;
+            if ((xspeed > -8) && (currentframe % 2 == 0))
+                xspeed-=3;
+        }else if (pattern_state == 3){
+            if ((yspeed < 10) && (currentframe % 2 == 0))
+                yspeed+=3;
+        }
     }
 
-     if (currentframe == lastShot + shotCooldownTimer)
+    //patern utilisant start pos pour changer patern
+
+    if (currentframe == lastShot + shotCooldownTimer)
         Shoot(renderer, currentframe, Actors->at(0)->center.x, Actors->at(0)->center.y, Actors);
 }

@@ -15,6 +15,8 @@ public:
     void Load(SDL_Renderer* renderer);
     void Unload();
 
+    Mix_Music* bgm;
+
     /*
     Engine topology goes like this:
     Layer 0: HUD. Not a Level element, that's for Mission to handle (at least for now)

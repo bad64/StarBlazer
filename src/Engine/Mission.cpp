@@ -44,6 +44,12 @@ void Mission::Unload()
 
 void NoNameEngine::MissionLoop()
 {
+    //Audio
+    if (!Mix_PlayingMusic())
+    {
+        Mix_PlayMusic(mission->currentlevel->bgm, -1);
+    }
+
     SDL_SetRenderTarget(renderer, scene);
 
     for (unsigned int i = 0; i < mission->Actors.size(); i++)
