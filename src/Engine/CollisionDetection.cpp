@@ -46,7 +46,6 @@ void NoNameEngine::CollisionDetection()
                                     if (!mission->Actors.at(i)->isInvincible)
                                     {
                                         mission->Actors.at(i)->HP--;
-                                        std::cout << mission->Actors.at(i)->HP << std::endl;
                                     }
                                     mission->Actors.at(j)->HP--;
                                 }

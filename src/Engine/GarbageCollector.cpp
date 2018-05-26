@@ -14,6 +14,11 @@ void NoNameEngine::GarbageCollector()
     {
         if (mission->Actors[j]->markForDelete)
         {
+            if (mission->Actors[j]->isTransparent)
+            {
+                mission->Actors[j]->parent->activeShots--;  //This causes a data race. SOLVE ASAP
+            }
+
             mission->Actors.erase(mission->Actors.begin()+j);
             j--;
         }

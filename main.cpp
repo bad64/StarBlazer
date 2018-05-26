@@ -404,8 +404,11 @@ int main(int argc, char* argv[])
             {
                 if (Engine.currentframe >= Engine.mission->Actors.at(0)->lastShot + Engine.mission->Actors.at(0)->shotCooldownTimer)
                 {
-                    Mix_PlayChannel(-1, lazer, 0);
-                    Engine.mission->Actors.at(0)->Shoot(Engine.renderer, Engine.currentframe, &Engine.mission->Actors);
+                    if (Engine.mission->Actors.at(0)->activeShots <= Engine.mission->Actors.at(0)->maxShots)
+                    {
+                        Mix_PlayChannel(-1, lazer, 0);
+                        Engine.mission->Actors.at(0)->Shoot(Engine.renderer, Engine.currentframe, &Engine.mission->Actors);
+                    }
                 }
             }
         }

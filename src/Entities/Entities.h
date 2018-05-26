@@ -26,7 +26,7 @@ public:
     int xspeed, yspeed;
     int createdOnFrame, timeToLive, animationFrame;
     int invincibilityStart, invincibilityDuration;
-    int lastShot, shotCooldownTimer;
+    int lastShot, shotCooldownTimer, maxShots, activeShots;
 
     bool controlsLocked;    //Only useful for the player
     bool isInvincible;      //Invincibility stops bullets

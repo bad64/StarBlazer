@@ -61,28 +61,12 @@ void Regular::Shoot(SDL_Renderer* renderer, int currentframe, int targetx, int t
         SDL_Point target_center = {targetx, targety};
         SDL_Point projection_center = {self_center.x, target_center.y};
 
-        /*int relative_x = round(6 * cos(target_center.x - self_center.x));
-        int relative_y = round(6 * sin(target_center.y - self_center.y));
-
-        std::cout << "Created bullet with speed values " << relative_x << ":" << relative_y << std::endl;
-
-        Actors->emplace_back(new Bullet(renderer, currentframe, sprite->rect.x, sprite->rect.y+25, relative_x, relative_y));*/
-
         //A is the enemy, B is the player, C is the projection of the player's y coordinate on the enemy's x axis value
 
         double ab = sqrt(pow(self_center.x - target_center.x, 2) + pow (self_center.y - target_center.y, 2));
         double ac = sqrt(pow(self_center.x - projection_center.x, 2) + pow (self_center.y - projection_center.y, 2));
 
         double angleBetween = acos(ac/ab) * 180/3.14159265;
-
-        //int relative_x = round(6 * cos(angleBetween));
-        //int relative_y = round(6 * sin(angleBetween));
-
-        if (debug)
-        {
-            std::cout << "Angle is " << angleBetween << " for x1y1: " << self_center.x << ":" << self_center.y;
-            std::cout << " and x2y2: " << target_center.x << ":" << target_center.y << std::endl;
-        }
 
         int bulletxvelocity = 0;
         int bulletyvelocity = 0;
@@ -209,14 +193,13 @@ void Regular::Shoot(SDL_Renderer* renderer, int currentframe, int targetx, int t
         }
 
         Actors->emplace_back(new Bullet(renderer, currentframe, this, sprite->rect.x, sprite->rect.y+25, bulletxvelocity, bulletyvelocity));
-        //Actors->emplace_back(new Bullet(renderer, currentframe, sprite->rect.x, sprite->rect.y+25, relative_x, relative_y));
         shotCooldownTimer = 300;
     }
 }
 
 void Regular::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor*> *Actors)
 {
-    if (pattern == 0) //tout droit 
+    if (pattern == 0) //tout droit
     {
 
     }
@@ -249,7 +232,7 @@ void Regular::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor
         }
     }else if (pattern == 2) // rapide puis vas tout droit a la fin
     {
-        if (sprite->rect.y > screenheight*7/10) 
+        if (sprite->rect.y > screenheight*7/10)
         {
             if (pattern_state != 1)
             {
@@ -271,7 +254,7 @@ void Regular::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor
             }
         }
 
-        if (pattern_state == 0) 
+        if (pattern_state == 0)
         {
             if ((yspeed < 12) && (currentframe % 2 == 0)) //tant quau dessus monte a chaque frame plus vite
                 yspeed+=3;
@@ -300,7 +283,7 @@ void Regular::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor
             if (pattern_state != 3 && yspeed < 8){
                 pattern_state = 3;
             }
-            if (sprite->rect.y > screenheight*7/10) 
+            if (sprite->rect.y > screenheight*7/10)
             {
                 if (pattern_state != 1)
                 {
@@ -315,10 +298,10 @@ void Regular::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor
                 }
             }
         }
-    
-        
 
-        if (pattern_state == 0) 
+
+
+        if (pattern_state == 0)
         {
             if ((yspeed < 8) && (currentframe % 2 == 0)) //tant quau dessus monte a chaque frame plus vite
                 yspeed+=3;

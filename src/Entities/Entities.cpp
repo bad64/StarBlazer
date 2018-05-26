@@ -13,6 +13,8 @@ Actor::Actor(SDL_Renderer* renderer, std::string nname, int nframe, int nxpos, i
     lastShot = createdOnFrame;
     shotCooldownTimer = nshotcd;
     timeToLive = nTTL;
+    activeShots = 0;
+    maxShots = 1;
 
     sprite->rect.x = startxpos = nxpos;
     sprite->rect.y = startypos = nypos;

@@ -1,6 +1,6 @@
 #include "Entities.h"
 
-Player::Player(SDL_Renderer* renderer, int currentframe, int xcoord, int ycoord, int shotcd) : Actor(renderer, "player", currentframe, xcoord, ycoord, 0, 0, 1, -1, 10)
+Player::Player(SDL_Renderer* renderer, int currentframe, int xcoord, int ycoord, int shotcd) : Actor(renderer, "player", currentframe, xcoord, ycoord, 0, 0, 1, -1, 20)
 {
     pattern = 0;
     doDraw = true;
@@ -9,6 +9,8 @@ Player::Player(SDL_Renderer* renderer, int currentframe, int xcoord, int ycoord,
     hbox.w = hbox.h = 20;
     xspeed = yspeed = 0;
     isInvincible = false;
+
+    maxShots = 3;
 
     if (debug)
         std::cout << "Created the player at " << this << " with parent " << parent << std::endl;
@@ -36,12 +38,16 @@ void Player::Update()
 
 void Player::Shoot(SDL_Renderer* renderer, int currentframe, std::vector<Actor*> *Actors)
 {
-    int ydelta;
-    if (yspeed < 0)
-        ydelta = yspeed * -1/2;
-    else if (yspeed >= 0)
-        ydelta = yspeed/2;
+    if (activeShots <= maxShots)
+    {
+        int ydelta;
+        if (yspeed < 0)
+            ydelta = yspeed * -1/2;
+        else if (yspeed >= 0)
+            ydelta = yspeed/2;
 
-    Actors->emplace_back(new Bullet(renderer, currentframe, this, center.x, center.y, 10-ydelta, yspeed/2));
-    lastShot = currentframe;
+        Actors->emplace_back(new Bullet(renderer, currentframe, this, center.x, center.y, 10-ydelta, yspeed/2));
+        activeShots+=1;
+        lastShot = currentframe;
+    }
 }
