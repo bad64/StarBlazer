@@ -29,6 +29,7 @@ public:
     int lastShot, shotCooldownTimer, maxShots, activeShots;
 
     bool controlsLocked;    //Only useful for the player
+    bool shotsLocked;
     bool isInvincible;      //Invincibility stops bullets
     bool isTransparent;     //"Transparent" means it ignores bullets
     bool doDraw;            //Basically, we don't draw what does not need to be drawn (aka whatever is off-screen)
@@ -57,6 +58,7 @@ public:
 
     void Update();
     void Shoot(SDL_Renderer* renderer, int currentframe, std::vector<Actor*> *Actors);
+    void Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor*> *Actors);
 };
 
 class Bullet : public Actor
@@ -68,6 +70,12 @@ public:
     void Update();
     void Shoot(SDL_Renderer* renderer, int currentframe, std::vector<Actor*> *Actors);
     void Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor*> *Actors);
+};
+class EnemyBullet : public Bullet
+{
+public:
+    EnemyBullet(SDL_Renderer* renderer, int currentframe, Actor* nparent, int xcoord, int ycoord, int nxspeed, int nyspeed);
+    ~EnemyBullet();
 };
 
 class Meteor : public Actor

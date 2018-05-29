@@ -7,7 +7,10 @@ NoNameEngine::NoNameEngine(SDL_Window* window, int window_width, int window_heig
     levelready = true;
     currentframe = 0;
     level = 1;
+    lives = 0;
     credits = 0;
+    gameover = false;
+    flag_goto_title = false;
 
     SDL_GetRendererOutputSize(renderer, &res_w, &res_h);
 
@@ -103,6 +106,8 @@ void NoNameEngine::StartGame()
 {
     Uint8 veilopacity;
     SDL_GetTextureAlphaMod(veil, &veilopacity);
+    lives = 1;
+    gameover = false;
 
     mission->Actors.clear();
 
@@ -157,8 +162,39 @@ void NoNameEngine::ChangeLevel()
     }
 }
 
+void NoNameEngine::GoToTitle()
+{
+    Uint8 veilopacity;
+    SDL_GetTextureAlphaMod(veil, &veilopacity);
+
+    if (veilopacity >= 255)
+    {
+        mission->Actors.clear();
+        flag_goto_title = false;
+        currentframe = 0;
+        timer.zero();
+        level = 1;
+        mainmenu->displaytype = 0;
+
+        demo->Unload();
+        nameentry->Unload();
+        mission->Unload();
+        mainmenu->Load(renderer);
+
+        for (unsigned int i = 1; i < 6; i++)
+        {
+            mainmenu->gfx[i]->alpha = 0;
+            mainmenu->gfx[i]->AutoAlpha();
+        }
+
+        FadeIn();
+        SetState(TITLE);
+    }
+}
+
 void NoNameEngine::ResetToTitle()
 {
+    flag_goto_title = false;
     currentframe = 0;
     timer.zero();
     level = 1;
@@ -175,6 +211,7 @@ void NoNameEngine::ResetToTitle()
         mainmenu->gfx[i]->AutoAlpha();
     }
 
+    FadeIn();
     SetState(TITLE);
 }
 

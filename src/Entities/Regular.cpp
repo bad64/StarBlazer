@@ -45,7 +45,6 @@ void Regular::Update()
     }
 }
 
-//void Regular::Shoot(SDL_Renderer* renderer, int currentframe, Actor*& target, std::vector<Actor*> *Actors)
 void Regular::Shoot(SDL_Renderer* renderer, int currentframe, int targetx, int targety, std::vector<Actor*> *Actors)
 {
     lastShot = currentframe;
@@ -192,7 +191,8 @@ void Regular::Shoot(SDL_Renderer* renderer, int currentframe, int targetx, int t
             }
         }
 
-        Actors->emplace_back(new Bullet(renderer, currentframe, this, sprite->rect.x, sprite->rect.y+25, bulletxvelocity, bulletyvelocity));
+        Actors->emplace_back(new EnemyBullet(renderer, currentframe, this, sprite->rect.x, sprite->rect.y+25, bulletxvelocity, bulletyvelocity));
+        activeShots++;
         shotCooldownTimer = 300;
     }
 }

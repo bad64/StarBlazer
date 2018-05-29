@@ -21,6 +21,7 @@ void NoNameEngine::CollisionDetection()
                                     if (i == 0)
                                     {
                                         std::cout << "Player ate a meteor or something" << std::endl;
+                                        lives--;
                                     }
 
                                     if (!mission->Actors.at(i)->isInvincible)
@@ -37,6 +38,7 @@ void NoNameEngine::CollisionDetection()
                                     if (i == 0)
                                     {
                                         std::cout << "Player got shot the f down" << std::endl;
+                                        lives--;
                                     }
                                     else
                                     {

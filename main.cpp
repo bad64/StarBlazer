@@ -190,6 +190,10 @@ int main(int argc, char* argv[])
                 {
                     Engine.ResetToTitle();
                 }
+                if (event.key.keysym.sym == SDLK_F3)
+                {
+                    Engine.flag_goto_title = true;
+                }
             }
             if (gamepad != NULL)
             {
@@ -309,100 +313,102 @@ int main(int argc, char* argv[])
             }
 
             //Secondary input loop
-
-            if (((!keyboard[SDL_SCANCODE_W]) && (!keyboard[SDL_SCANCODE_S])) || ((keyboard[SDL_SCANCODE_W]) && (keyboard[SDL_SCANCODE_S])) || ((SDL_JoystickGetAxis(gamepad, 1) > -10000) && (SDL_JoystickGetAxis(gamepad, 1) < 10000)))
+            if (Engine.mission->Actors.at(0)->controlsLocked == false)
             {
-                Engine.mission->Actors.at(0)->yspeed = 0;
-            }
-            if (((!keyboard[SDL_SCANCODE_A]) && (!keyboard[SDL_SCANCODE_D])) || ((keyboard[SDL_SCANCODE_A]) && (keyboard[SDL_SCANCODE_D])) || ((SDL_JoystickGetAxis(gamepad, 0) > -10000) && (SDL_JoystickGetAxis(gamepad, 0) < 10000)))
-            {
-                Engine.mission->Actors.at(0)->xspeed = 0;
-            }
-
-            if ((keyboard[SDL_SCANCODE_W]) || (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_UP) || (SDL_JoystickGetAxis(gamepad, 1) <= -10000))
-            {
-                if (Engine.mission->Actors.at(0)->sprite->rect.y - 5 >= 0)
-                    Engine.mission->Actors.at(0)->yspeed = -5;
-                else
+                if (((!keyboard[SDL_SCANCODE_W]) && (!keyboard[SDL_SCANCODE_S])) || ((keyboard[SDL_SCANCODE_W]) && (keyboard[SDL_SCANCODE_S])) || ((SDL_JoystickGetAxis(gamepad, 1) > -10000) && (SDL_JoystickGetAxis(gamepad, 1) < 10000)))
+                {
                     Engine.mission->Actors.at(0)->yspeed = 0;
-            }
-            if ((keyboard[SDL_SCANCODE_S]) || (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_DOWN) || (SDL_JoystickGetAxis(gamepad, 1) >= 10000))
-            {
-                if (Engine.mission->Actors.at(0)->sprite->rect.y + 5 <= screenheight-150)
-                    Engine.mission->Actors.at(0)->yspeed = 5;
-                else
-                    Engine.mission->Actors.at(0)->yspeed = 0;
-            }
-
-            if ((keyboard[SDL_SCANCODE_A]) || (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_LEFT) || (SDL_JoystickGetAxis(gamepad, 0) <= -10000))
-            {
-                if (Engine.mission->Actors.at(0)->sprite->rect.x - 5 >= 0)
-                    Engine.mission->Actors.at(0)->xspeed = -5;
-                else
+                }
+                if (((!keyboard[SDL_SCANCODE_A]) && (!keyboard[SDL_SCANCODE_D])) || ((keyboard[SDL_SCANCODE_A]) && (keyboard[SDL_SCANCODE_D])) || ((SDL_JoystickGetAxis(gamepad, 0) > -10000) && (SDL_JoystickGetAxis(gamepad, 0) < 10000)))
+                {
                     Engine.mission->Actors.at(0)->xspeed = 0;
-            }
-            if ((keyboard[SDL_SCANCODE_D]) || (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_RIGHT) || (SDL_JoystickGetAxis(gamepad, 0) >= 10000))
-            {
-                if (Engine.mission->Actors.at(0)->sprite->rect.x + 5 <= screenwidth*7/10)
-                    Engine.mission->Actors.at(0)->xspeed = 5;
-                else
-                    Engine.mission->Actors.at(0)->xspeed = 0;
-            }
+                }
 
-            //Specific to joysticks
-            if (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_LEFTUP)
-            {
-                if (Engine.mission->Actors.at(0)->sprite->rect.x - 5 >= 0)
-                    Engine.mission->Actors.at(0)->xspeed = -5;
-                else
-                    Engine.mission->Actors.at(0)->xspeed = 0;
+                if ((keyboard[SDL_SCANCODE_W]) || (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_UP) || (SDL_JoystickGetAxis(gamepad, 1) <= -10000))
+                {
+                    if (Engine.mission->Actors.at(0)->sprite->rect.y - 5 >= 0)
+                        Engine.mission->Actors.at(0)->yspeed = -5;
+                    else
+                        Engine.mission->Actors.at(0)->yspeed = 0;
+                }
+                if ((keyboard[SDL_SCANCODE_S]) || (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_DOWN) || (SDL_JoystickGetAxis(gamepad, 1) >= 10000))
+                {
+                    if (Engine.mission->Actors.at(0)->sprite->rect.y + 5 <= screenheight-150)
+                        Engine.mission->Actors.at(0)->yspeed = 5;
+                    else
+                        Engine.mission->Actors.at(0)->yspeed = 0;
+                }
 
-                if (Engine.mission->Actors.at(0)->sprite->rect.y - 5 >= 0)
-                    Engine.mission->Actors.at(0)->yspeed = -5;
-                else
-                    Engine.mission->Actors.at(0)->yspeed = 0;
-            }
-            if (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_RIGHTUP)
-            {
-                if (Engine.mission->Actors.at(0)->sprite->rect.x + 5 <= screenwidth*7/10)
-                    Engine.mission->Actors.at(0)->xspeed = 5;
-                else
-                    Engine.mission->Actors.at(0)->xspeed = 0;
+                if ((keyboard[SDL_SCANCODE_A]) || (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_LEFT) || (SDL_JoystickGetAxis(gamepad, 0) <= -10000))
+                {
+                    if (Engine.mission->Actors.at(0)->sprite->rect.x - 5 >= 0)
+                        Engine.mission->Actors.at(0)->xspeed = -5;
+                    else
+                        Engine.mission->Actors.at(0)->xspeed = 0;
+                }
+                if ((keyboard[SDL_SCANCODE_D]) || (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_RIGHT) || (SDL_JoystickGetAxis(gamepad, 0) >= 10000))
+                {
+                    if (Engine.mission->Actors.at(0)->sprite->rect.x + 5 <= screenwidth*7/10)
+                        Engine.mission->Actors.at(0)->xspeed = 5;
+                    else
+                        Engine.mission->Actors.at(0)->xspeed = 0;
+                }
 
-                if (Engine.mission->Actors.at(0)->sprite->rect.y - 5 >= 0)
-                    Engine.mission->Actors.at(0)->yspeed = -5;
-                else
-                    Engine.mission->Actors.at(0)->yspeed = 0;
-            }
-            if (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_LEFTDOWN)
-            {
-                if (Engine.mission->Actors.at(0)->sprite->rect.x - 5 >= 0)
-                    Engine.mission->Actors.at(0)->xspeed = -5;
-                else
-                    Engine.mission->Actors.at(0)->xspeed = 0;
+                //Specific to joysticks
+                if (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_LEFTUP)
+                {
+                    if (Engine.mission->Actors.at(0)->sprite->rect.x - 5 >= 0)
+                        Engine.mission->Actors.at(0)->xspeed = -5;
+                    else
+                        Engine.mission->Actors.at(0)->xspeed = 0;
 
-                if (Engine.mission->Actors.at(0)->sprite->rect.y + 5 <= screenheight-150)
-                    Engine.mission->Actors.at(0)->yspeed = 5;
-                else
-                    Engine.mission->Actors.at(0)->yspeed = 0;
-            }
-            if (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_RIGHTDOWN)
-            {
-                if (Engine.mission->Actors.at(0)->sprite->rect.x + 5 <= screenwidth*7/10)
-                    Engine.mission->Actors.at(0)->xspeed = 5;
-                else
-                    Engine.mission->Actors.at(0)->xspeed = 0;
+                    if (Engine.mission->Actors.at(0)->sprite->rect.y - 5 >= 0)
+                        Engine.mission->Actors.at(0)->yspeed = -5;
+                    else
+                        Engine.mission->Actors.at(0)->yspeed = 0;
+                }
+                if (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_RIGHTUP)
+                {
+                    if (Engine.mission->Actors.at(0)->sprite->rect.x + 5 <= screenwidth*7/10)
+                        Engine.mission->Actors.at(0)->xspeed = 5;
+                    else
+                        Engine.mission->Actors.at(0)->xspeed = 0;
 
-                if (Engine.mission->Actors.at(0)->sprite->rect.y + 5 <= screenheight-150)
-                    Engine.mission->Actors.at(0)->yspeed = 5;
-                else
-                    Engine.mission->Actors.at(0)->yspeed = 0;
+                    if (Engine.mission->Actors.at(0)->sprite->rect.y - 5 >= 0)
+                        Engine.mission->Actors.at(0)->yspeed = -5;
+                    else
+                        Engine.mission->Actors.at(0)->yspeed = 0;
+                }
+                if (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_LEFTDOWN)
+                {
+                    if (Engine.mission->Actors.at(0)->sprite->rect.x - 5 >= 0)
+                        Engine.mission->Actors.at(0)->xspeed = -5;
+                    else
+                        Engine.mission->Actors.at(0)->xspeed = 0;
+
+                    if (Engine.mission->Actors.at(0)->sprite->rect.y + 5 <= screenheight-150)
+                        Engine.mission->Actors.at(0)->yspeed = 5;
+                    else
+                        Engine.mission->Actors.at(0)->yspeed = 0;
+                }
+                if (SDL_JoystickGetHat(gamepad, 0) == SDL_HAT_RIGHTDOWN)
+                {
+                    if (Engine.mission->Actors.at(0)->sprite->rect.x + 5 <= screenwidth*7/10)
+                        Engine.mission->Actors.at(0)->xspeed = 5;
+                    else
+                        Engine.mission->Actors.at(0)->xspeed = 0;
+
+                    if (Engine.mission->Actors.at(0)->sprite->rect.y + 5 <= screenheight-150)
+                        Engine.mission->Actors.at(0)->yspeed = 5;
+                    else
+                        Engine.mission->Actors.at(0)->yspeed = 0;
+                }
             }
 
             //Now we shoot stuff
             if ((keyboard[SDL_SCANCODE_SPACE]) || (SDL_JoystickGetButton(gamepad, 0)))
             {
-                if (Engine.currentframe >= Engine.mission->Actors.at(0)->lastShot + Engine.mission->Actors.at(0)->shotCooldownTimer)
+                if ((Engine.currentframe >= Engine.mission->Actors.at(0)->lastShot + Engine.mission->Actors.at(0)->shotCooldownTimer) && (!Engine.mission->Actors.at(0)->shotsLocked))
                 {
                     if (Engine.mission->Actors.at(0)->activeShots <= Engine.mission->Actors.at(0)->maxShots)
                     {

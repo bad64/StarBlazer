@@ -105,9 +105,10 @@ class NoNameEngine
 public:
     //Your friends, the attributes
     SDL_Renderer* renderer;     //Your new best friend
-    int level;                 //Self explanatory
+    int level;                  //Self explanatory
     unsigned int score;         //Same
     char credits;               //Ditto
+    int lives;                  //Eh
     int res_w, res_h;           //Internal engine renderer resolution
     uint32_t currentframe;      //Keeping track of time
     Timer timer;                //Ditto, but in a more human manner (seconds vs frames rendered)
@@ -117,6 +118,10 @@ public:
     //A veil to hide stuff and/or ease transitions
     SDL_Texture* veil;
     bool fade;  //0 is out, 1 is in
+
+    //Flags to know what the hell to do after an event
+    bool gameover;
+    bool flag_goto_title;
 
     //The different machine states, expressed as classes
     Intro* introsequence;
@@ -150,13 +155,14 @@ public:
     //Love it or hate it
     void Render();
     void CollisionDetection();
-    void GarbageCollector();
+    void GarbageCollector(int currentframe);
 
     //Misc
     void FadeOut();
     void FadeIn();
     void Fade();
     void ModCredits();  //Re-generates the texture for the amount of available credits
+    void GoToTitle();
     void ResetToTitle();
     void FullReset();
 };
