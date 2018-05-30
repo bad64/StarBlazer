@@ -99,4 +99,6 @@ void Player::Shoot(SDL_Renderer* renderer, int currentframe, std::vector<Actor*>
         lastShot = currentframe;
         activeShots+=1;
     }
+
+    std::cout << activeShots << " shots active" << std::endl;
 }

@@ -19,14 +19,6 @@ void Level1::ReadScript(SDL_Renderer* renderer, int currentframe, std::vector<Ac
     {
         Actors->emplace(Actors->begin(), new Player(renderer, currentframe, 100, screenheight/2, 30));
     }
-    else if (currentframe == 300)
-    {
-        //Actors->emplace_back(new Meteor(renderer, currentframe, 900, -100));
-        /*Actors->emplace_back(new Meteor(renderer, currentframe, 800, -400));
-        Actors->emplace_back(new Meteor(renderer, currentframe, 700, -700));
-        Actors->emplace_back(new Meteor(renderer, currentframe, 600, -1000));
-        Actors->emplace_back(new Meteor(renderer, currentframe, 500, -1300));*/
-    }
     else if (currentframe == 200)
     {
         Actors->emplace_back(new Regular(renderer, currentframe, screenwidth + 100, screenheight*5/10, 1, 50));
@@ -287,6 +279,10 @@ void Level1::ReadScript(SDL_Renderer* renderer, int currentframe, std::vector<Ac
     else if (currentframe == 4210)
     {
         Actors->emplace_back(new Regular(renderer, currentframe, screenwidth + 100, screenheight*2/10, 2, 50));
+    }
+    else if (currentframe == 4500)
+    {
+        gameover = true;
     }
 
 }

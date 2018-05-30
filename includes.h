@@ -23,6 +23,8 @@ extern bool nointro;
 extern bool freeplay;
 extern bool fpsdisplay;
 
+extern bool gameover;
+
 extern int screenheight;
 extern int screenwidth;
 

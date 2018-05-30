@@ -119,10 +119,6 @@ public:
     SDL_Texture* veil;
     bool fade;  //0 is out, 1 is in
 
-    //Flags to know what the hell to do after an event
-    bool gameover;
-    bool flag_goto_title;
-
     //The different machine states, expressed as classes
     Intro* introsequence;
     Menu* mainmenu;

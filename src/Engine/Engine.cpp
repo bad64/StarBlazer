@@ -9,8 +9,6 @@ NoNameEngine::NoNameEngine(SDL_Window* window, int window_width, int window_heig
     level = 1;
     lives = 0;
     credits = 0;
-    gameover = false;
-    flag_goto_title = false;
 
     SDL_GetRendererOutputSize(renderer, &res_w, &res_h);
 

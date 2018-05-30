@@ -40,6 +40,14 @@ void NoNameEngine::GarbageCollector(int currentframe)
         {
             if (mission->Actors[j]->markForDelete)
             {
+                if ((mission->Actors[j]->isTransparent) && (mission->Actors[j]->parent == mission->Actors[0])) //Catch the bullet
+                {
+                    std::cout << "Decreasing shot counter to " << mission->Actors[j]->parent->activeShots - 1 << std::endl;
+
+                    if (mission->Actors[j]->parent->activeShots - 1 >= 0)
+                        mission->Actors[j]->parent->activeShots--;
+                }
+
                 mission->Actors.erase(mission->Actors.begin()+j);
                 j--;
             }

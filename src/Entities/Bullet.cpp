@@ -83,9 +83,6 @@ void Bullet::Update()
             if (debug)
                 std::cout << "Marked a bullet for deletion" << std::endl;
             markForDelete = true;
-
-            if (parent->activeShots-1 >= 0)
-                parent->activeShots--;
         }
     }
 }

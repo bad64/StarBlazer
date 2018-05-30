@@ -50,6 +50,7 @@ void NoNameEngine::CollisionDetection()
                                     {
                                         mission->Actors.at(i)->HP--;
                                     }
+
                                     mission->Actors.at(j)->HP--;
                                 }
                             }

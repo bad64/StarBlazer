@@ -9,6 +9,8 @@ bool nointro = false;
 bool freeplay = false;
 bool fpsdisplay = false;
 
+bool gameover = false;
+
 int screenwidth = 960;
 int screenheight = 720;
 
