@@ -75,19 +75,28 @@ void Player::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor*
 
 void Player::Shoot(SDL_Renderer* renderer, int currentframe, std::vector<Actor*> *Actors)
 {
-    int ydelta;
-    if (yspeed < 0)
-        ydelta = yspeed * -1/2;
-    else if (yspeed >= 0)
-        ydelta = yspeed/2;
-
-    Actors->emplace_back(new Bullet(renderer, currentframe, this, center.x, center.y, 10-ydelta, yspeed/2));
-    lastShot = currentframe;
-    activeShots+=1;
-
-    if (activeShots == 3)
+    if (!stop)
     {
-        shotsLocked = true;
-        shotCooldownTimer = 60;
+        int ydelta;
+        if (yspeed < 0)
+            ydelta = yspeed * -1/2;
+        else if (yspeed >= 0)
+            ydelta = yspeed/2;
+
+        Actors->emplace_back(new Bullet(renderer, currentframe, this, center.x, center.y, 10-ydelta, yspeed/2));
+        lastShot = currentframe;
+        activeShots+=1;
+
+        if (activeShots == 3)
+        {
+            shotsLocked = true;
+            shotCooldownTimer = 60;
+        }
+    }
+    else
+    {
+        Actors->emplace_back(new Bullet(renderer, currentframe, this, center.x, center.y, shot_xspeed, shot_yspeed));
+        lastShot = currentframe;
+        activeShots+=1;
     }
 }

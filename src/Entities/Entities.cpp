@@ -23,6 +23,8 @@ Actor::Actor(SDL_Renderer* renderer, std::string nname, int nframe, int nxpos, i
     center.x = sprite->rect.x + sprite->rect.w/2;
     center.y = sprite->rect.y + sprite->rect.h/2;
 
+    shot_xspeed = shot_yspeed = 0;
+
     hbox_x_offset = hbox_y_offset = 0;
 
     hbox.w = hbox.h = 50;
@@ -30,6 +32,7 @@ Actor::Actor(SDL_Renderer* renderer, std::string nname, int nframe, int nxpos, i
     cliprect = {frame*50, 0, 50, 50};
 
     isInvincible = false;
+    stop = false;
     doDraw = false;
     controlsLocked = false;
     markForDelete = false;

@@ -28,7 +28,10 @@ public:
     int invincibilityStart, invincibilityDuration;
     int lastShot, shotCooldownTimer, maxShots, activeShots;
 
+    int shot_xspeed, shot_yspeed;
+
     bool controlsLocked;    //Only useful for the player
+    bool stop;
     bool shotsLocked;
     bool isInvincible;      //Invincibility stops bullets
     bool isTransparent;     //"Transparent" means it ignores bullets

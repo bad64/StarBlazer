@@ -43,6 +43,7 @@ void NoNameEngine::CollisionDetection()
                                     else
                                     {
                                         std::cout << "Enemy got shot the f down at " << mission->Actors.at(i)->sprite->rect.x << ":" << mission->Actors.at(i)->sprite->rect.y << std::endl;
+                                        score += 100;
                                     }
 
                                     if (!mission->Actors.at(i)->isInvincible)
