@@ -40,17 +40,6 @@ void NoNameEngine::GarbageCollector(int currentframe)
         {
             if (mission->Actors[j]->markForDelete)
             {
-                if (mission->Actors[j]->isTransparent)
-                {
-                    //if (mission->Actors[j]->parent->activeShots - 1 >= 0)
-                        //mission->Actors[j]->parent->activeShots--;  //This causes a data race. SOLVE ASAP
-                }
-
-    //            if (mission->Actors[j]->activeShots == 0)
-    //            {
-    //                mission->Actors.erase(mission->Actors.begin()+j);
-    //                j--;
-    //            }
                 mission->Actors.erase(mission->Actors.begin()+j);
                 j--;
             }
