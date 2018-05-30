@@ -106,7 +106,7 @@ void NoNameEngine::StartGame()
 {
     Uint8 veilopacity;
     SDL_GetTextureAlphaMod(veil, &veilopacity);
-    lives = 1;
+    lives = 3;
     gameover = false;
 
     mission->Actors.clear();
@@ -170,7 +170,7 @@ void NoNameEngine::GoToTitle()
     if (veilopacity >= 255)
     {
         mission->Actors.clear();
-        flag_goto_title = false;
+        gameover = false;
         currentframe = 0;
         timer.zero();
         level = 1;
@@ -194,7 +194,7 @@ void NoNameEngine::GoToTitle()
 
 void NoNameEngine::ResetToTitle()
 {
-    flag_goto_title = false;
+    gameover = false;
     currentframe = 0;
     timer.zero();
     level = 1;

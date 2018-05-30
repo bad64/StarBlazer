@@ -142,6 +142,9 @@ int main(int argc, char* argv[])
         if ((joystick_start) && (joystick_select))
             loop = false;
 
+        if (Engine.gameover)
+                    Engine.GoToTitle();
+
         SDL_PumpEvents();
         SDL_SetRenderTarget(Engine.renderer, Engine.scene);
         SDL_RenderClear(Engine.renderer);
@@ -192,7 +195,7 @@ int main(int argc, char* argv[])
                 }
                 if (event.key.keysym.sym == SDLK_F3)
                 {
-                    Engine.flag_goto_title = true;
+
                 }
             }
             if (gamepad != NULL)

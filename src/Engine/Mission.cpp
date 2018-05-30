@@ -60,18 +60,15 @@ void NoNameEngine::MissionLoop()
 
     mission->currentlevel->ReadScript(renderer, currentframe, &mission->Actors);
 
-    if (!gameover)
-        CollisionDetection();
+    CollisionDetection();
 
     if (gameover)
     {
         FadeOut();
-        GoToTitle();
     }
 
     Render();
 
-    if (!gameover)
-        GarbageCollector(currentframe);
+    GarbageCollector(currentframe);
 }
 
