@@ -17,6 +17,9 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
+#define R_WIDTH 960
+#define R_HEIGHT 720
+
 extern bool debug;
 extern bool verbose;
 extern bool nointro;

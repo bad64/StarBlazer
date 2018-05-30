@@ -27,10 +27,12 @@ NoNameEngine::NoNameEngine(SDL_Window* window, int window_width, int window_heig
     nameentry = new NameEntry();
     nameentry->Load();
 
-    scene = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, window_width, window_height);
+    scene = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 960, 720);
+    r_scene = {0,0,960,720};
+    r_scene.x = (window_width/2) - (r_scene.w/2);
 
     //Create the veil
-    veil = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, window_width, window_height);
+    veil = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 960, 720);
     fade = 1;
     SDL_SetTextureBlendMode(veil, SDL_BLENDMODE_BLEND);
     SDL_SetRenderTarget(renderer, veil);

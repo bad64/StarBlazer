@@ -113,6 +113,7 @@ public:
     uint32_t currentframe;      //Keeping track of time
     Timer timer;                //Ditto, but in a more human manner (seconds vs frames rendered)
     SDL_Texture* scene;         //Where we render everything
+    SDL_Rect r_scene;
     ENGINE_STATE state;         //What we should be rendering
 
     //A veil to hide stuff and/or ease transitions

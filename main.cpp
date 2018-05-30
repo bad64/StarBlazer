@@ -592,7 +592,7 @@ int main(int argc, char* argv[])
                 {
                     if (!Engine.mission->Actors.at(0)->stop)
                     {
-                        if (Engine.mission->Actors.at(0)->sprite->rect.y - 5 >= 0)
+                        if (Engine.mission->Actors.at(0)->sprite->rect.y - 5 >= 50)
                             Engine.mission->Actors.at(0)->yspeed = -5;
                         else
                             Engine.mission->Actors.at(0)->yspeed = 0;
@@ -613,7 +613,7 @@ int main(int argc, char* argv[])
                 {
                     if (!Engine.mission->Actors.at(0)->stop)
                     {
-                        if (Engine.mission->Actors.at(0)->sprite->rect.x - 5 >= 0)
+                        if (Engine.mission->Actors.at(0)->sprite->rect.x - 5 >= 10)
                             Engine.mission->Actors.at(0)->xspeed = -5;
                         else
                             Engine.mission->Actors.at(0)->xspeed = 0;
@@ -694,7 +694,7 @@ int main(int argc, char* argv[])
 
         SDL_SetRenderDrawColor(Engine.renderer, 0,0,0,255);
         SDL_SetRenderTarget(Engine.renderer, NULL);
-        SDL_RenderCopy(Engine.renderer, Engine.scene, NULL, NULL);
+        SDL_RenderCopy(Engine.renderer, Engine.scene, NULL, &Engine.r_scene);
         SDL_RenderPresent(Engine.renderer);
         ++Engine.currentframe;
     }

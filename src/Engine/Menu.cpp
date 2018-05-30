@@ -18,8 +18,9 @@ void Menu::Prime(SDL_Renderer* renderer)
         gfx[i] = new ShadedText(renderer, text_strings[i-2], 0, 0);
 
     int r_width, r_height;
-    SDL_GetRendererOutputSize(renderer, &r_width, &r_height);
-    r_width /= 2;
+    //SDL_GetRendererOutputSize(renderer, &r_width, &r_height);
+    r_width = 960/2;
+    r_height = 720;
 
     gfx[2]->rect.x = r_width - gfx[2]->rect.w/2;
     gfx[2]->rect.y = (r_height * 3)/4 - gfx[2]->rect.h / 2;
@@ -104,8 +105,8 @@ void NoNameEngine::MainMenuLoop()   //This is supposed to use the NoNameEngine n
                 nameentry->Read(renderer);
 
                 SDL_QueryTexture(nameentry->line[0], NULL, NULL, &nameentry->linerect[0].w, &nameentry->linerect[0].h);
-                nameentry->linerect[0].x = res_w/2 - nameentry->linerect[0].w/2;
-                nameentry->linerect[0].y = (res_h*2)/6;
+                nameentry->linerect[0].x = R_WIDTH/2 - nameentry->linerect[0].w/2;
+                nameentry->linerect[0].y = (R_HEIGHT*2)/6;
 
                 for (unsigned int i = 1; i < 5; i++)
                 {
