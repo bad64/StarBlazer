@@ -3,7 +3,10 @@
 void Intro::Prime(SDL_Renderer* renderer)
 {
     gfx[0] = new UIElement(renderer, "lab", 0);
-    SDL_GetRendererOutputSize(renderer, &gfx[0]->rect.x, &gfx[0]->rect.y);
+    //SDL_GetRendererOutputSize(renderer, &gfx[0]->rect.x, &gfx[0]->rect.y);
+
+    gfx[0]->rect.x = R_WIDTH;
+    gfx[0]->rect.y = R_HEIGHT;
 
     /*if (gfx[0]->rect.y == 1080)
     {
