@@ -18,6 +18,9 @@ public:
 
     int startxpos, startypos;
 
+    bool doNotReplace;
+    bool ignoreCollisions;
+
     int pattern;
     int pattern_state;
 
@@ -52,6 +55,16 @@ public:
 };
 
 //Derived classes are really just alternate constructors in a more convenient form
+
+class Explosion : public Actor
+{
+public:
+    Explosion(SDL_Renderer* renderer, int currentframe, int xcoord, int ycoord);
+    ~Explosion();
+
+    void Update();
+    void Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor*> *Actors);
+};
 
 class Player : public Actor
 {

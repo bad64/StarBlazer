@@ -191,6 +191,7 @@ void Regular::Shoot(SDL_Renderer* renderer, int currentframe, int targetx, int t
             }
         }
 
+        Mix_PlayChannel(-1, lazer, 0);
         Actors->emplace_back(new EnemyBullet(renderer, currentframe, this, sprite->rect.x, sprite->rect.y+25, bulletxvelocity, bulletyvelocity));
         activeShots++;
         shotCooldownTimer = 300;

@@ -28,6 +28,9 @@ extern bool gameover;
 extern int screenheight;
 extern int screenwidth;
 
+extern Mix_Chunk* lazer;
+extern Mix_Chunk* boom;
+
 enum TEAM { PLAYER, ENEMIES, NONE};
 enum ACTOR_STATE { ALIVE, DESTROYED, RESPAWNING, INVINCIBLE };
 enum ACTOR_DIRECTION { RIGHT, LEFT, UP, DOWN };

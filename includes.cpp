@@ -11,6 +11,9 @@ bool fpsdisplay = false;
 
 bool gameover = false;
 
+Mix_Chunk* lazer = nullptr;
+Mix_Chunk* boom = nullptr;
+
 int screenwidth = 960;
 int screenheight = 720;
 

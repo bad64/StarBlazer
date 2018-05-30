@@ -4,65 +4,72 @@ void NoNameEngine::CollisionDetection()
 {
     for (unsigned int i = 0; i < mission->Actors.size(); i++)
     {
-        if (mission->Actors.at(i)->isTransparent == false) //This should be a ship
+        if (mission->Actors.at(i)->ignoreCollisions == false)
         {
-            for (unsigned int j = 0; j < mission->Actors.size(); j++)
+            if (mission->Actors.at(i)->isTransparent == false) //This should be a ship
             {
-                if (i != j)
+                for (unsigned int j = 0; j < mission->Actors.size(); j++)
                 {
-                    if (mission->Actors[i]->team != mission->Actors[j]->team)
+                    if (i != j)
                     {
-                        if ((mission->Actors.at(i) != mission->Actors.at(j)->parent))
+                        if (mission->Actors[i]->team != mission->Actors[j]->team)
                         {
-                            if (mission->Actors.at(j)->isTransparent == false) //Ship colliding with a ship
+                            if ((mission->Actors.at(i) != mission->Actors.at(j)->parent))
                             {
-                                if (SDL_HasIntersection(&mission->Actors.at(i)->hbox, &mission->Actors.at(j)->hbox) == SDL_TRUE)
+                                if (mission->Actors.at(j)->isTransparent == false) //Ship colliding with a ship
                                 {
-                                    if (i == 0)
+                                    if (SDL_HasIntersection(&mission->Actors.at(i)->hbox, &mission->Actors.at(j)->hbox) == SDL_TRUE)
                                     {
-                                        std::cout << "Player ate a meteor or something" << std::endl;
-                                        lives--;
-                                    }
+                                        if (i == 0)
+                                        {
+                                            if (!mission->Actors.at(0)->isInvincible)
+                                                lives--;
+                                        }
 
-                                    if (!mission->Actors.at(i)->isInvincible)
-                                    {
-                                        mission->Actors.at(i)->HP--;
+                                        if (!mission->Actors.at(i)->isInvincible)
+                                        {
+                                            mission->Actors.at(i)->HP--;
+                                        }
+                                        Mix_PlayChannel(-1, boom, 0);
                                     }
-
                                 }
-                            }
-                            else if (mission->Actors.at(j)->isTransparent == true) //Ship colliding with a bullet
-                            {
-                                if (SDL_HasIntersection(&mission->Actors.at(i)->hbox, &mission->Actors.at(j)->hbox))
+                                else if (mission->Actors.at(j)->isTransparent == true) //Ship colliding with a bullet
                                 {
-                                    if (i == 0)
+                                    if (SDL_HasIntersection(&mission->Actors.at(i)->hbox, &mission->Actors.at(j)->hbox))
                                     {
-                                        std::cout << "Player got shot the f down" << std::endl;
-                                        lives--;
-                                    }
-                                    else
-                                    {
-                                        std::cout << "Enemy got shot the f down at " << mission->Actors.at(i)->sprite->rect.x << ":" << mission->Actors.at(i)->sprite->rect.y << std::endl;
-                                        score += 100;
-                                    }
+                                        if (i == 0)
+                                        {
+                                            if (!mission->Actors.at(0)->isInvincible)
+                                                lives--;
+                                        }
+                                        else
+                                        {
+                                            score += 100;
+                                        }
+                                        Mix_PlayChannel(-1, boom, 0);
 
-                                    if (!mission->Actors.at(i)->isInvincible)
-                                    {
-                                        mission->Actors.at(i)->HP--;
-                                    }
+                                        if (!mission->Actors.at(i)->isInvincible)
+                                        {
+                                            mission->Actors.at(i)->HP--;
+                                        }
 
-                                    mission->Actors.at(j)->HP--;
+                                        mission->Actors.at(j)->HP--;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+            else if (mission->Actors.at(i)->isTransparent == false)   //This should be a bullet. If this isn't a bullet, something is terroriffically wrong.
+            {
+                //Just don't check from the bullet's POV. Doing so increases CPU usage for basically no reason.
+                //Let the ships figure out themselves whether or not they have been hit by a bullet.
+            }
         }
-        else if (mission->Actors.at(i)->isTransparent == false)   //This should be a bullet. If this isn't a bullet, something is terroriffically wrong.
+        else
         {
-            //Just don't check from the bullet's POV. Doing so increases CPU usage for basically no reason.
-            //Let the ships figure out themselves whether or not they have been hit by a bullet.
+            std::cout << "Skipping collision check for " << i << std::endl;
         }
     }
 }

@@ -11,6 +11,9 @@ void NoNameEngine::GarbageCollector(int currentframe)
                 if ((lives > 0) && (!mission->Actors[i]->isInvincible))
                 {
                     std::cout << lives << " lives remaining" << std::endl;
+                    mission->Actors[i]->sprite->rect.x = -100;
+                    mission->Actors[i]->sprite->rect.y = screenheight/2;
+
                     mission->Actors[i]->HP = 1;
                     mission->Actors[i]->isInvincible = true;
                     mission->Actors[i]->controlsLocked = true;
@@ -18,11 +21,8 @@ void NoNameEngine::GarbageCollector(int currentframe)
                     mission->Actors[i]->invincibilityDuration = 180;
                     mission->Actors[i]->xspeed = 5;
                     mission->Actors[i]->yspeed = 0;
-
-                    mission->Actors[i]->sprite->rect.x = -100;
-                    mission->Actors[i]->sprite->rect.y = screenheight/2;
                 }
-                else if (lives == 0)
+                else if (lives <= 0)
                 {
                     mission->Actors[i]->sprite->rect.x = -1000;
                     gameover = true;

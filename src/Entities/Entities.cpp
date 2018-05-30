@@ -16,6 +16,9 @@ Actor::Actor(SDL_Renderer* renderer, std::string nname, int nframe, int nxpos, i
     activeShots = 0;
     maxShots = 1;
 
+    doNotReplace = false;
+    ignoreCollisions = false;
+
     sprite->rect.x = startxpos = nxpos;
     sprite->rect.y = startypos = nypos;
     sprite->rect.w = sprite->rect.h = 50;

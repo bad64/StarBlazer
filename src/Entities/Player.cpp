@@ -63,6 +63,12 @@ void Player::Behave(SDL_Renderer* renderer, int currentframe, std::vector<Actor*
         isInvincible = false;
     }
 
+    //Just an extra safety
+    if ((currentframe >= invincibilityStart + invincibilityDuration) && (isInvincible))
+    {
+        isInvincible = false;
+    }
+
     //Invincibility flicker
     if (isInvincible)
     {

@@ -88,7 +88,8 @@ int main(int argc, char* argv[])
 
     //Useful sounds
     Mix_Chunk* quarterup = Mix_LoadWAV("resources/snd/InsertCoin.wav");
-    Mix_Chunk* lazer = Mix_LoadWAV("resources/snd/Lazer.wav");
+    lazer = Mix_LoadWAV("resources/snd/Lazer.wav");
+    boom = Mix_LoadWAV("resources/snd/Boom.wav");
 
     //Let's do some joystick stuff
     SDL_Joystick* gamepad = NULL;

@@ -3,6 +3,7 @@
 Bullet::Bullet(SDL_Renderer* renderer, int currentframe, Actor* nparent, int xcoord, int ycoord, int nxspeed, int nyspeed) : Actor (renderer, "bullet", currentframe, xcoord, ycoord, nxspeed, nyspeed, 1, 180)
 {
     isTransparent = true;
+    doNotReplace = true;
     parent = nparent;
     team = nparent->team;
 
@@ -25,6 +26,7 @@ Bullet::~Bullet()
 EnemyBullet::EnemyBullet(SDL_Renderer* renderer, int currentframe, Actor* nparent, int xcoord, int ycoord, int nxspeed, int nyspeed) : Bullet(renderer, currentframe, nparent, xcoord, ycoord, nxspeed, nyspeed)
 {
     isTransparent = true;
+    doNotReplace = true;
     parent = nparent;
     team = nparent->team;
 
