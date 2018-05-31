@@ -31,6 +31,8 @@ extern bool gameover;
 extern int screenheight;
 extern int screenwidth;
 
+extern Mix_Chunk* quarterup;
+extern Mix_Chunk* jingle;
 extern Mix_Chunk* lazer;
 extern Mix_Chunk* boom;
 

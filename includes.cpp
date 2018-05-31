@@ -11,6 +11,8 @@ bool fpsdisplay = false;
 
 bool gameover = false;
 
+Mix_Chunk* quarterup = nullptr;
+Mix_Chunk* jingle = nullptr;
 Mix_Chunk* lazer = nullptr;
 Mix_Chunk* boom = nullptr;
 

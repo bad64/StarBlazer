@@ -87,7 +87,8 @@ int main(int argc, char* argv[])
     Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
 
     //Useful sounds
-    Mix_Chunk* quarterup = Mix_LoadWAV("resources/snd/InsertCoin.wav");
+    quarterup = Mix_LoadWAV("resources/snd/InsertCoin.wav");
+    jingle = Mix_LoadWAV("resources/snd/Jingle.wav");
     lazer = Mix_LoadWAV("resources/snd/Lazer.wav");
     boom = Mix_LoadWAV("resources/snd/Boom.wav");
 

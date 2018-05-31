@@ -41,13 +41,16 @@ void NoNameEngine::IntroLoop()
 {
     SDL_SetRenderTarget(renderer, scene);
 
-    if (currentframe == 300)
+    if (currentframe == 330)
     {
         introsequence->Unload();
         currentframe = 0;
         timer.zero();
         SetState(TITLE);
     }
+
+    if (currentframe == 60)
+        Mix_PlayChannel(-1, jingle, 0);
 
     if ((currentframe > 60) && (currentframe < 180) && (introsequence->gfx[0]->alpha <= 255))
     {
