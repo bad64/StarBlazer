@@ -6,6 +6,7 @@ NoNameEngine::NoNameEngine(SDL_Window* window, int window_width, int window_heig
     state = INTRO;
     levelready = true;
     currentframe = 0;
+    score = 0;
     level = 1;
     lives = 0;
     credits = 0;
@@ -30,6 +31,9 @@ NoNameEngine::NoNameEngine(SDL_Window* window, int window_width, int window_heig
     scene = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 960, 720);
     r_scene = {0,0,960,720};
     r_scene.x = (window_width/2) - (r_scene.w/2);
+
+    hud = NULL;
+    hudrect = {0, 0, 960, 720*1/10};
 
     //Create the veil
     veil = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 960, 720);
@@ -194,10 +198,12 @@ void NoNameEngine::GoToTitle()
 
 void NoNameEngine::ResetToTitle()
 {
+    std::cout << "Soft reset..." << std::endl;
     gameover = false;
     currentframe = 0;
     timer.zero();
     level = 1;
+    score = 0;
     mainmenu->displaytype = 0;
 
     demo->Unload();
@@ -218,7 +224,11 @@ void NoNameEngine::ResetToTitle()
 void NoNameEngine::FullReset()
 {
     //Essentially this is the same function as the constructor, but does not run the risk of crashing the game when re-instancing the engine itself
-    //That being said, it's bugged as hell. Prefer ResetToTitle() when possible
+    //That being said, it's bugged as hell, and mostly leaks memory. Prefer ResetToTitle() when possible
+    std::cout << "TILT" << std::endl;
+
+    nointro = false;
+
     state = INTRO;
     currentframe = 0;
     level = 1;
@@ -268,7 +278,5 @@ void NoNameEngine::FullReset()
 
     SDL_DestroyTexture(scene);
 
-    int renderer_buf_w, renderer_buf_h;
-    SDL_GetRendererOutputSize(renderer, &renderer_buf_w, &renderer_buf_h);
-    scene = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, renderer_buf_w, renderer_buf_h);
+    scene = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 960, 720);
 }

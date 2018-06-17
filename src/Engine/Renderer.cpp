@@ -23,6 +23,7 @@ void NoNameEngine::Render()
     }
 
     //Draw UI
+    DrawHUD();
 
     //Draw veil
     Fade();

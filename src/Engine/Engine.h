@@ -154,6 +154,11 @@ public:
     void CollisionDetection();
     void GarbageCollector(int currentframe);
 
+    //HUD stuff
+    SDL_Texture* hud;
+    SDL_Rect hudrect;
+    void DrawHUD();
+
     //Misc
     void FadeOut();
     void FadeIn();
