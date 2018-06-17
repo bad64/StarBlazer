@@ -186,6 +186,7 @@ int main(int argc, char* argv[])
                     {
                         Engine.FadeOut();
                         Engine.levelready = false;
+                        Engine.hudrect.y = 0;
                     }
                 }
                 if (event.key.keysym.sym == SDLK_F1)
@@ -225,6 +226,7 @@ int main(int argc, char* argv[])
                         {
                             Engine.FadeOut();
                             Engine.levelready = false;
+                            Engine.hudrect.y = 0;
                         }
                         joystick_start = true;
                     }
