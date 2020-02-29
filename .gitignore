@@ -1,0 +1,8 @@
+bin/*
+*.zip
+*.txt
+*.dll
+*.bak
+*.sh
+new\ backup/*
+old\ backup/*
