@@ -1,4 +1,5 @@
 bin/*
+obj/*
 *.zip
 *.txt
 *.dll
